@@ -72,7 +72,8 @@ jobs:
         target: msvc2015-win64
   timeoutInMinutes: 0
   steps:
-  - script: C:/tools/python27/scripts/pip install conan
-    displayName: 'install conan'
-  - script: choco --version
-    displayName: 'choco version'
+  - script: |
+      choco install -yr python3 nsis
+      choco install -yr cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+      py -m pip install conan
+    displayName: 'install dependencies'
