@@ -36,6 +36,7 @@ jobs:
       stretch_raspbian:
         target: raspbian.stretch-armhf
   timeoutInMinutes: 0
+  condition: eq(1, 2)
   steps:
   - script: |
       git clone --recurse-submodules https://github.com/wkhtmltopdf/wkhtmltopdf.git
