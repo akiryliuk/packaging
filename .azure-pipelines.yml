@@ -61,19 +61,27 @@ jobs:
         targets/*.deb
         targets/*.rpm
         targets/*.7z
-- job: 'windows'
+- job: 'msvc2015'
   pool:
     vmImage: 'win1803'
   strategy:
     matrix:
-      msvc2015_win32:
+      win32:
         target: msvc2015-win32
-      msvc2015_win64:
-        target: msvc2015-win64
   timeoutInMinutes: 0
   steps:
   - script: |
-      choco install -yr python2 nsis vcbuildtools
-      choco install -yr cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+      choco install -yr --no-progress python2 nsis vcbuildtools
+      choco install -yr --no-progress cmake --installargs 'ADD_CMAKE_TO_PATH=System'
       C:/Python27/Scripts/pip install -q conan
     displayName: 'install dependencies'
+  - pwsh: |
+      Write-Host "##vso[task.prependpath]C:\Python27"
+      Write-Host "##vso[task.prependpath]C:\Python27\Scripts"
+    displayName: 'setup PATH'
+  - script: |
+      git clone --recurse-submodules https://github.com/wkhtmltopdf/wkhtmltopdf.git
+      cd wkhtmltopdf && git checkout $(checkout) && git submodule update
+    displayName: 'clone wkhtmltopdf'
+  - script: python build vagrant $(target) --version - - --iteration $(iteration) wkhtmltopdf
+    displayName: 'build package'
