@@ -63,7 +63,7 @@ jobs:
         targets/*.7z
 - job: 'windows'
   pool:
-    vmImage: 'vs2015-win2012r2'
+    vmImage: 'win1803'
   strategy:
     matrix:
       msvc2015_win32:
@@ -73,7 +73,7 @@ jobs:
   timeoutInMinutes: 0
   steps:
   - script: |
-      choco install -yr python3 nsis
+      choco install -yr python2 nsis vcbuildtools
       choco install -yr cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-      py -m pip install conan
+      C:/Python27/Scripts/pip install -q conan
     displayName: 'install dependencies'
