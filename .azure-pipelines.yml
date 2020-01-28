@@ -74,6 +74,8 @@ jobs:
       choco install -yr --no-progress python2 nsis vcbuildtools
       choco install -yr --no-progress cmake --installargs 'ADD_CMAKE_TO_PATH=System'
       C:/Python27/Scripts/pip install -q conan
+      refreshenv
+      set
     displayName: 'install dependencies'
   - pwsh: |
       Write-Host "##vso[task.prependpath]C:\Python27"
