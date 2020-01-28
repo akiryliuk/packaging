@@ -19,6 +19,7 @@ def prepare_build(config, target, build_dir, src_dir):
     import json, os, sys, subprocess
 
     msvc_ver = config['vagrant-targets'][target]['msvc_version']
+    print(os.environ)
     tool_dir = os.environ['VS%sCOMNTOOLS' % msvc_ver.replace('.', '')]
     msvc_dir = os.path.abspath(os.path.join(tool_dir, '..', '..', 'VC'))
     msvc_arg = 'x86'
