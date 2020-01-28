@@ -72,7 +72,7 @@ jobs:
         target: msvc2015-win64
   timeoutInMinutes: 0
   steps:
-  - script: python -m pip install conan
+  - script: python3 -m pip install conan
     displayName: 'install conan'
   - script: choco --version
     displayName: 'choco version'
