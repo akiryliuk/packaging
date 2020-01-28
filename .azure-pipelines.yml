@@ -61,3 +61,20 @@ jobs:
         targets/*.deb
         targets/*.rpm
         targets/*.7z
+- job: 'windows'
+  pool:
+    vmImage: 'vs2015-win2012r2'
+  strategy:
+    matrix:
+      msvc2015_win32:
+        target: msvc2015-win32
+      msvc2015_win64:
+        target: msvc2015-win64
+  timeoutInMinutes: 0
+  steps:
+  - script: |
+      git clone --recurse-submodules https://github.com/wkhtmltopdf/wkhtmltopdf.git
+      cd wkhtmltopdf && git checkout $(checkout) && git submodule update
+    displayName: 'clone wkhtmltopdf'
+  - script: python -c "import yaml"
+    displayName: 'build package'
